@@ -1,23 +1,26 @@
-# Configure the Google Cloud provider
+# This is the provider used to spin up the gcloud instance
 provider "google" {
+  credentials = file("terraform.json")
   project = "ishaqgcpproject"
-  #credentials = file("terraform.json")
-  region  = "us-central1"
+  region  = "us-east1"
+  
 }
 
-# Create a Google Compute instance
-resource "google_compute_instance" "example" {
-  name          = "terraform"
-  machine_type  = "f1-micro"
-  zone          = "us-central1-f"
-  #tags = ["prod","web"]
-  
+resource "google_compute_instance" "vm-instance" {
+  name         = "test"
+  machine_type = "f1-micro"
+  zone         = "us-east1-b"
+
+  metadata = {
+    startup-script-url = "gs://ishaqgcpproject/startup.sh"
+  }
+
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"
     }
   }
-  
+    
   network_interface {
     network = "default"
 
@@ -26,3 +29,5 @@ resource "google_compute_instance" "example" {
     }
   }
 }
+
+
