@@ -1,10 +1,15 @@
 pipeline {
     agent any
 
+
+    environment {
+    SVC_ACCOUNT_KEY = credentials('terraform-auth')
+  }
+     
     stages {
         stage ('checkout'){
             steps {
-                git branch: 'master', url: 'https://github.com/ishaqmdgcp/terraform.git'
+                git branch: 'master', url: 'https://github.com/ishaqmdgcp/VMInstance.git'
             }
         }
       
@@ -15,6 +20,8 @@ pipeline {
                     def tfHome = tool name: 'Terraform'
                     env.PATH = "${tfHome}:${env.PATH}"
                 }
+                sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./terraform.json'
+		sh 'pwd'
                 sh 'terraform --version'               
                
             }
@@ -24,7 +31,7 @@ pipeline {
 		 steps {            
                 sh 'terraform init'
                 sh 'terraform plan'
-                sh 'terraform apply -auto-approve'
+                sh 'terraform destroy -auto-approve'
                              
              
             
