@@ -10,6 +10,7 @@ resource "google_compute_instance" "vm-instance" {
   name         = "starup-script"
   machine_type = "f1-micro"
   zone         = "us-east1-b"
+  tag = ["prod"]
 
   metadata = {
     startup-script-url = "gs://ishaqgcpproject/startup.sh"
