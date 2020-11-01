@@ -2,14 +2,14 @@
 provider "google" {
   credentials = file("terraform.json")
   project = "ishaqgcpproject"
-  region  = "us-east1"
+  region  = "us-central1"
   
 }
 
 resource "google_compute_instance" "vm-instance" {
   name         = "starup-script"
   machine_type = "f1-micro"
-  zone         = "us-east1-b"
+  zone         = "us-central1-a"
   tags = ["prod"]
 
   metadata = {
