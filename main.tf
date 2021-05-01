@@ -1,7 +1,7 @@
 # This is the provider used to spin up the gcloud instance
 provider "google" {
   credentials = file("terraform.json")
-  project = "ishaqgcpproject"
+  project = "migcpproject"
   region  = "us-central1"
   
 }
@@ -13,7 +13,7 @@ resource "google_compute_instance" "vm-instance" {
   tags = ["prod"]
 
   metadata = {
-    startup-script-url = "gs://ishaqgcpproject/startup.sh"
+    startup-script-url = "gs://test-mi/sunday.sh"
   }
 
   boot_disk {
